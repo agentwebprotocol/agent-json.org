@@ -1,0 +1,101 @@
+{
+  "awp_version": "0.1",
+  "domain": "agent-json.org",
+  "intent": "agent.json schema reference, validator, and examples. The definitive resource for the agent.json file format — part of Agent Web Protocol (AWP). Agents can validate agent.json files, retrieve the schema definition, and browse examples.",
+  "capabilities": {
+    "streaming": false,
+    "batch_actions": false,
+    "webhooks": false,
+    "pagination": "none",
+    "idempotency": true
+  },
+  "auth": {
+    "required_for": [],
+    "optional_for": [],
+    "type": "none"
+  },
+  "entities": {
+    "validation_result": {
+      "fields": {
+        "valid": "boolean",
+        "errors": "array[string]",
+        "warnings": "array[string]"
+      }
+    },
+    "schema": {
+      "fields": {
+        "json_schema": "object",
+        "version": "string"
+      }
+    },
+    "example": {
+      "fields": {
+        "title": "string",
+        "description": "string",
+        "filename": "string",
+        "code": "string"
+      }
+    }
+  },
+  "actions": [
+    {
+      "id": "validate_agent_json",
+      "description": "Validate an agent.json document against the AWP schema. Returns validation errors and warnings for missing recommended fields.",
+      "auth_required": false,
+      "inputs": {
+        "document": { "type": "object", "required": true, "description": "The agent.json content to validate" }
+      },
+      "outputs": {
+        "result": "object[validation_result]"
+      },
+      "endpoint": "/api/validate",
+      "method": "POST",
+      "rate_limit": "60/minute",
+      "execution_model": "sync"
+    },
+    {
+      "id": "get_schema",
+      "description": "Retrieve the current AWP agent.json JSON Schema definition",
+      "auth_required": false,
+      "inputs": {},
+      "outputs": {
+        "schema": "object[schema]"
+      },
+      "endpoint": "/api/schema",
+      "method": "GET",
+      "rate_limit": "60/minute",
+      "execution_model": "sync"
+    },
+    {
+      "id": "get_examples",
+      "description": "Retrieve curated agent.json examples for different industries",
+      "auth_required": false,
+      "inputs": {},
+      "outputs": {
+        "examples": "array[example]"
+      },
+      "endpoint": "/api/examples",
+      "method": "GET",
+      "rate_limit": "60/minute",
+      "execution_model": "sync"
+    }
+  ],
+  "errors": {
+    "INVALID_JSON": {
+      "recovery": "ensure the request body is valid JSON and retry"
+    },
+    "RATE_LIMITED": {
+      "recovery": "wait 60 seconds then retry"
+    }
+  },
+  "dependencies": {},
+  "agent_hints": {
+    "validation_note": "validation is stateless — no session or auth required",
+    "schema_caching": "schema changes infrequently — safe to cache for 24 hours"
+  },
+  "agent_status": {
+    "operational": true,
+    "degraded_actions": [],
+    "status_endpoint": "/api/status"
+  }
+}
