@@ -230,6 +230,72 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* CLI */}
+      <section className="max-w-6xl mx-auto px-6 pb-24">
+        <div className="h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent mb-16" />
+
+        <h2 className="text-2xl font-semibold mb-4">Install the CLI</h2>
+        <p className="text-muted leading-relaxed mb-8 max-w-2xl">
+          Generate and validate{" "}
+          <code className="font-mono text-sm text-foreground bg-surface px-1.5 py-0.5 rounded border border-border">
+            agent.json
+          </code>{" "}
+          from your terminal.
+        </p>
+
+        <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="rounded-lg border border-border overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#0c0c12] border-b border-border">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+              </div>
+              <span className="text-xs text-muted font-mono ml-2">
+                Generate a manifest
+              </span>
+            </div>
+            <div className="bg-[#0c0c12] px-4 py-4">
+              <code className="font-mono text-sm text-foreground">
+                <span className="text-muted">$</span> npx agent-json init
+              </code>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-border overflow-hidden">
+            <div className="flex items-center gap-2 px-4 py-2 bg-[#0c0c12] border-b border-border">
+              <div className="flex gap-1.5">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#27272a]" />
+              </div>
+              <span className="text-xs text-muted font-mono ml-2">
+                Validate a manifest
+              </span>
+            </div>
+            <div className="bg-[#0c0c12] px-4 py-4">
+              <code className="font-mono text-sm text-foreground">
+                <span className="text-muted">$</span> npx agent-json validate
+                agent.json
+              </code>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-sm text-muted">
+          Zero dependencies. Works instantly via npx. Published at{" "}
+          <a
+            href="https://www.npmjs.com/package/agent-json"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            npmjs.com/package/agent-json
+          </a>
+          .
+        </p>
+      </section>
     </div>
   );
 }
