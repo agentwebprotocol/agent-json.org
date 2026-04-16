@@ -2,9 +2,20 @@ import { CodeBlock } from "@/components/CodeBlock";
 import Link from "next/link";
 
 const minimalExample = `{
-  "awp_version": "0.1",
+  "awp_version": "0.2",
   "domain": "example.com",
-  "intent": "Example service — search and retrieve items. Agents can help users find what they need.",
+  "intent": "Example service — search, retrieve, and buy items. Agents can help users find and purchase what they need.",
+  "protocols": {
+    "mcp": {
+      "version": "2025-06-18",
+      "endpoint": "https://mcp.example.com",
+      "transport": "http"
+    },
+    "a2a": {
+      "version": "0.3",
+      "endpoint": "https://agent.example.com/agent/message"
+    }
+  },
   "capabilities": {
     "streaming": false,
     "pagination": "cursor",
@@ -31,6 +42,12 @@ const minimalExample = `{
       "method": "POST",
       "rate_limit": "60/minute",
       "execution_model": "sync"
+    },
+    {
+      "id": "buy_item",
+      "description": "Buy an item — routes through the MCP server",
+      "via": "mcp",
+      "operation": "create_payment_link"
     }
   ],
   "agent_status": {

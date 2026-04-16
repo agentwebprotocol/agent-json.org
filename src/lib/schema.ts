@@ -1,4 +1,4 @@
-// Based on Agent Web Protocol Specification v0.1
+// Based on Agent Web Protocol Specification v0.2
 // Source: https://github.com/agentwebprotocol/spec/blob/main/SPEC.md
 
 export const agentJsonSchema = {
@@ -12,7 +12,21 @@ export const agentJsonSchema = {
     awp_version: {
       type: "string",
       pattern: "^\\d+\\.\\d+$",
-      description: 'Spec version conformance using MAJOR.MINOR format (e.g. "0.1")',
+      description: 'Spec version conformance using MAJOR.MINOR format (e.g. "0.2")',
+    },
+    protocols: {
+      type: "object",
+      additionalProperties: {
+        type: "object",
+        required: ["version"],
+        properties: {
+          version: { type: "string", description: "Protocol version supported" },
+          endpoint: { type: "string", description: "Protocol endpoint URL" },
+        },
+        additionalProperties: true,
+      },
+      description:
+        "v0.2: Sibling agent protocols this surface speaks (e.g. a2a, mcp, acp, ap2, x402, skyfire). Keys are protocol identifiers. Agents may route declared actions through a named protocol via the `via` field.",
     },
     domain: {
       type: "string",
@@ -84,18 +98,28 @@ export const agentJsonSchema = {
       type: "array",
       items: {
         type: "object",
-        required: ["id", "description", "auth_required", "inputs", "outputs", "endpoint", "method"],
+        required: ["id"],
         properties: {
           id: { type: "string", description: "Unique action identifier" },
           description: { type: "string", description: "Plain language for agent reasoning" },
           auth_required: { type: "boolean", description: "Authentication necessity" },
           inputs: { type: "object", description: "Typed parameters" },
           outputs: { type: "object", description: "Typed results" },
-          endpoint: { type: "string", description: "API path" },
+          endpoint: { type: "string", description: "API path (required unless `via` is set — v0.2)" },
           method: {
             type: "string",
             enum: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-            description: "HTTP verb",
+            description: "HTTP verb (required unless `via` is set — v0.2)",
+          },
+          via: {
+            type: "string",
+            description:
+              "v0.2: Protocol identifier (must appear in top-level `protocols`). When set, the action is invoked via that protocol instead of direct HTTP.",
+          },
+          operation: {
+            type: "string",
+            description:
+              "v0.2: Protocol-specific operation name when `via` is set (e.g. MCP tool name or A2A method).",
           },
           rate_limit: { type: "string", description: "Throttle specification" },
           idempotency: {

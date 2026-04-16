@@ -1,5 +1,5 @@
 {
-  "awp_version": "0.1",
+  "awp_version": "0.2",
   "domain": "agent-json.org",
   "intent": "agent.json schema reference, validator, and examples. The definitive resource for the agent.json file format — part of Agent Web Protocol (AWP). Agents can validate agent.json files, retrieve the schema definition, and browse examples.",
   "capabilities": {
